@@ -16,7 +16,7 @@ export const getVendorPoints = async (req: Request, res: Response) => {
   try {
     const stands = await vendorPointRepository.find({
       relations: ["vendorPointProducts", "vendorPointProducts.product"],
-      where: { festival: {id: req.params.fid }}
+      where: { festival: { id: req.params.fid } },
     });
     res.json(stands);
   } catch (error) {
@@ -116,7 +116,10 @@ export const getVendorPointProducts = async (req: Request, res: Response) => {
 export const createVendorPoint = async (req: Request, res: Response) => {
   try {
     const { name, festival_id } = req.body;
-    const vendorPoint = vendorPointRepository.create({ name: name, festival: {id: festival_id} });
+    const vendorPoint = vendorPointRepository.create({
+      name: name,
+      festival: { id: festival_id },
+    });
     await vendorPointRepository.save(vendorPoint);
     res.status(201).json(vendorPoint);
   } catch (error) {

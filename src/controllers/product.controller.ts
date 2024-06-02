@@ -8,7 +8,7 @@ const productRepository = DataSource.getRepository(Product);
 export const getProducts = async (req: Request, res: Response) => {
   try {
     const products = await productRepository.find({
-      where: { festival: { id: req.params.fid } }
+      where: { festival: { id: req.params.fid } },
     });
     res.json(products);
   } catch (error) {
@@ -34,7 +34,12 @@ export const createProduct = async (req: Request, res: Response) => {
   try {
     const { name, price, tilecolor, festival_id } = req.body;
     console.log(`New product: ${name}`);
-    const product = productRepository.create({ name, price, tilecolor, festival: {id: festival_id} });
+    const product = productRepository.create({
+      name,
+      price,
+      tilecolor,
+      festival: { id: festival_id },
+    });
     await productRepository.save(product);
     res.status(201).json(product);
   } catch (error) {

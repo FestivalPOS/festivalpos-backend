@@ -35,7 +35,7 @@ export const createFestival = async (req: Request, res: Response) => {
     await festivalRepository.save(festival);
     res.status(201).json(festival);
   } catch (error) {
-    console.error(error)
+    console.error(error);
     res.status(500).json({ message: (error as Error).message });
   }
 };
@@ -48,7 +48,7 @@ export const updateFestival = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Festival not found" });
     }
     festival.name = name;
-    festival.save_sales = save_sales
+    festival.save_sales = save_sales;
     await festivalRepository.save(festival);
     res.json(festival);
   } catch (error) {
