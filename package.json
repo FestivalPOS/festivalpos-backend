@@ -34,10 +34,10 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon - exec 'ts-node' src/index.ts",
-    "test": "npm run test:format",
+    "test": "npm run test:types && npm run test:format",
     "test:types": "tsc --noEmit",
-    "format": "npx prettier . --write",
     "test:format": "npx prettier . --check",
+    "format": "npx prettier . --write",
     "typeorm": "typeorm-ts-node-commonjs",
     "typeorm:generate": "npm run typeorm migration:generate -- -d src/data-source.ts",
     "typeorm:migrate": "npm run typeorm migration:run -- -d ./src/data-source.ts",
