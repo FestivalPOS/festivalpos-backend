@@ -1,12 +1,21 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, JoinTable, ManyToOne } from 'typeorm';
-import { Product } from './Product';
-import { VendorPointProduct } from './VendorPointProducts';
-import { Sale } from './Sale';
-import { Festival } from './Festival';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  JoinTable,
+  ManyToOne,
+} from "typeorm";
+import { Product } from "./Product";
+import { VendorPointProduct } from "./VendorPointProducts";
+import { Sale } from "./Sale";
+import { Festival } from "./Festival";
 
-@Entity('sales_stands')
+@Entity("sales_stands")
 export class VendorPoints {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column()
@@ -18,18 +27,22 @@ export class VendorPoints {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => VendorPointProduct, vendorPointProduct => vendorPointProduct.vendorPoint, {
-    cascade: true,
-    onDelete: 'CASCADE'
-  })
+  @OneToMany(
+    () => VendorPointProduct,
+    (vendorPointProduct) => vendorPointProduct.vendorPoint,
+    {
+      cascade: true,
+      onDelete: "CASCADE",
+    },
+  )
   vendorPointProducts: VendorPointProduct[];
 
-  @OneToMany(() => Sale, sale => sale.vendorPoint) // Add this line
+  @OneToMany(() => Sale, (sale) => sale.vendorPoint) // Add this line
   sales: Sale[];
 
-  @ManyToOne(() => Festival, festival => festival.vendorPoints, {
+  @ManyToOne(() => Festival, (festival) => festival.vendorPoints, {
     cascade: true,
-    onDelete: 'CASCADE'
+    onDelete: "CASCADE",
   })
   festival: Festival;
 }

@@ -1,13 +1,13 @@
-import { Request, Response } from 'express';
-import DataSource from '../data-source';
-import { Festival } from '../entity/Festival';
+import { Request, Response } from "express";
+import DataSource from "../data-source";
+import { Festival } from "../entity/Festival";
 
 const festivalRepository = DataSource.getRepository(Festival);
 
 export const getFestivals = async (req: Request, res: Response) => {
   try {
     const festivals = await festivalRepository.find({
-      relations: ['products', 'vendorPoints', 'sales']
+      relations: ["products", "vendorPoints", "sales"],
     });
     res.json(festivals);
   } catch (error) {
@@ -19,10 +19,10 @@ export const getFestivalById = async (req: Request, res: Response) => {
   try {
     const festival = await festivalRepository.findOne({
       where: { id: req.params.id },
-      relations: ['products', 'vendorPoints', 'sales']
+      relations: ["products", "vendorPoints", "sales"],
     });
     if (!festival) {
-      return res.status(404).json({ message: 'Festival not found' });
+      return res.status(404).json({ message: "Festival not found" });
     }
     res.json(festival);
   } catch (error) {
@@ -46,7 +46,7 @@ export const updateFestival = async (req: Request, res: Response) => {
     const { name } = req.body;
     const festival = await festivalRepository.findOneBy({ id: req.params.id });
     if (!festival) {
-      return res.status(404).json({ message: 'Festival not found' });
+      return res.status(404).json({ message: "Festival not found" });
     }
     festival.name = name;
     await festivalRepository.save(festival);
@@ -60,7 +60,7 @@ export const deleteFestival = async (req: Request, res: Response) => {
   try {
     const result = await festivalRepository.delete(req.params.id);
     if (result.affected === 0) {
-      return res.status(404).json({ message: 'Festival not found' });
+      return res.status(404).json({ message: "Festival not found" });
     }
     res.status(204).send();
   } catch (error) {
