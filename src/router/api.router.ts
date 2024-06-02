@@ -29,10 +29,10 @@ const router = express.Router();
 
 // Routes with authentication and cors
 router.get("/festivals", authentification, getFestivals);
-router.get("/festivals/:id", authentification, getFestivalById);
-router.post("/festivals", authentification, createFestival);
-router.put("/festivals/:id", authentification, updateFestival);
-router.delete("/festivals/:id", authentification, deleteFestival);
+router.get("/festival/:id", authentification, getFestivalById);
+router.post("/festival", authentification, createFestival);
+router.put("/festival/:id", authentification, updateFestival);
+router.delete("/festival/:id", authentification, deleteFestival);
 
 router.post(
   "/vendor-point/:id/product",
