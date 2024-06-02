@@ -6,9 +6,7 @@ const festivalRepository = DataSource.getRepository(Festival);
 
 export const getFestivals = async (req: Request, res: Response) => {
   try {
-    const festivals = await festivalRepository.find({
-      relations: ["products", "vendorPoints", "sales"],
-    });
+    const festivals = await festivalRepository.find();
     res.json(festivals);
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
@@ -37,18 +35,20 @@ export const createFestival = async (req: Request, res: Response) => {
     await festivalRepository.save(festival);
     res.status(201).json(festival);
   } catch (error) {
+    console.error(error)
     res.status(500).json({ message: (error as Error).message });
   }
 };
 
 export const updateFestival = async (req: Request, res: Response) => {
   try {
-    const { name } = req.body;
+    const { name, save_sales } = req.body;
     const festival = await festivalRepository.findOneBy({ id: req.params.id });
     if (!festival) {
       return res.status(404).json({ message: "Festival not found" });
     }
     festival.name = name;
+    festival.save_sales = save_sales
     await festivalRepository.save(festival);
     res.json(festival);
   } catch (error) {

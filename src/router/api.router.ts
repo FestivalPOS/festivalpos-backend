@@ -49,13 +49,13 @@ router.put(
   authentification,
   updateVendorPointProductOrder,
 );
-router.get("/vendor-points", authentification, getVendorPoints);
+router.get("/vendor-points/:fid", authentification, getVendorPoints);
 router.get("/vendor-point/:id", authentification, getVendorPointById);
 router.post("/vendor-point", authentification, createVendorPoint);
 router.put("/vendor-point/:id", authentification, updateVendorPoint);
 router.delete("/vendor-point/:id", authentification, deleteVendorPoint);
 
-router.get("/products", authentification, getProducts);
+router.get("/products/:fid", authentification, getProducts);
 router.get("/product/:id", authentification, getProductById);
 router.post("/product", authentification, createProduct);
 router.put("/product/:id", authentification, updateProduct);

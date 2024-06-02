@@ -19,7 +19,7 @@ export class Festival {
   name: string;
 
   @Column()
-  save_sales: boolean;
+  save_sales: boolean = true;
 
   @CreateDateColumn()
   createdAt: Date;
