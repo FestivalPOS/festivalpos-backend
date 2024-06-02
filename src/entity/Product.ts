@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { VendorPoints } from './VendorPoint';
 import { VendorPointProduct } from './VendorPointProducts';
+import { Festival } from './Festival';
 
 @Entity()
 export class Product {
@@ -30,4 +31,10 @@ export class Product {
     onDelete: 'CASCADE'
   })
   vendorPointProducts: VendorPointProduct[];
+
+  @ManyToOne(() => Festival, festival => festival.products, {
+    cascade: true,
+    onDelete: 'CASCADE'
+  })
+  festival: Festival;
 }

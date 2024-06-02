@@ -5,6 +5,7 @@ import { Product } from '../entity/Product';
 import { In } from 'typeorm';
 import VendorPointProductService from '../services/VendorPointProduct.service';
 import { VendorPointProduct } from '../entity/VendorPointProducts';
+import { Festival } from '../entity/Festival';
 
 
 const vendorPointRepository = DataSource.getRepository(VendorPoints);
@@ -25,7 +26,7 @@ export const getVendorPoints = async (req: Request, res: Response) => {
     try {
       const stand = await vendorPointRepository.findOne({
         where: { id: req.params.id },
-        relations: ['vendorPointProducts', 'vendorPointProducts.product'],
+        relations: ['vendorPointProducts', 'vendorPointProducts.product', 'festival'],
       });
       if (!stand) {
         return res.status(404).json({ message: 'POS not found' });
@@ -47,6 +48,8 @@ export const getVendorPoints = async (req: Request, res: Response) => {
       return res.json({
         id: stand.id,
         name: stand.name,
+        festival: stand.festival.name,
+        save_sales: stand.festival.save_sales,
         products: productsWithOrder
       });
     } catch (error) {

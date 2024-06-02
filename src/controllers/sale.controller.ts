@@ -21,9 +21,14 @@ export const createSale = async (req: Request, res: Response) => {
         const productRepository = queryRunner.manager.getRepository(Product);
 
         // Fetching the VendorPoints entity
-        const vendorPoint = await queryRunner.manager.findOne(VendorPoints, { where: { id: req.body.vendorPointId } });
+        const vendorPoint = await queryRunner.manager.findOne(VendorPoints, { where: { id: req.body.vendorPointId }, relations: ['festival'] });
         if (!vendorPoint) {
             throw new Error("Vendor point not found");
+        }
+
+        // Check if the corresponding festival's save_sales is true
+        if (!vendorPoint.festival.save_sales) {
+            return res.status(403).json({ message: 'Sales creation is disabled for this festival' });
         }
 
         const saleData = {

@@ -1,7 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, JoinTable, ManyToOne } from 'typeorm';
 import { Product } from './Product';
 import { VendorPointProduct } from './VendorPointProducts';
 import { Sale } from './Sale';
+import { Festival } from './Festival';
 
 @Entity('sales_stands')
 export class VendorPoints {
@@ -25,4 +26,10 @@ export class VendorPoints {
 
   @OneToMany(() => Sale, sale => sale.vendorPoint) // Add this line
   sales: Sale[];
+
+  @ManyToOne(() => Festival, festival => festival.vendorPoints, {
+    cascade: true,
+    onDelete: 'CASCADE'
+  })
+  festival: Festival;
 }
