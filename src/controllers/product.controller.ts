@@ -49,13 +49,12 @@ export const createProduct = async (req: Request, res: Response) => {
 
 export const updateProduct = async (req: Request, res: Response) => {
   try {
-    const { name, price, tilecolor, festival_id } = req.body;
+    const { name, price, tilecolor } = req.body;
     const product = await productRepository.findOneBy({ id: req.params.id });
 
     product.name = name;
     product.price = price;
     product.tilecolor = tilecolor;
-    product.festival.id = festival_id;
     await productRepository.save(product);
     res.json(product);
   } catch (error) {
@@ -65,12 +64,20 @@ export const updateProduct = async (req: Request, res: Response) => {
 
 export const deleteProduct = async (req: Request, res: Response) => {
   try {
-    const result = await productRepository.delete(req.params.id);
-    if (result.affected === 0) {
+    const product = await productRepository.findOne({
+      where: { id: req.params.id },
+      relations: ["vendorPointProducts"],
+    });
+
+    if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
+
+    await productRepository.softRemove(product);
+
     res.status(204).send();
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: (error as Error).message });
   }
 };
