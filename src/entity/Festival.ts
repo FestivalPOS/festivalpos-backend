@@ -8,7 +8,6 @@ import {
   DeleteDateColumn,
 } from "typeorm";
 import { Product } from "./Product";
-import { Sale } from "./Sale";
 import { VendorPoints } from "./VendorPoint";
 
 @Entity("festivals")

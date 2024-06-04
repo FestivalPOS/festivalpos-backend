@@ -4,8 +4,12 @@ import { Sale } from "../entity/Sale";
 import { SaleItem } from "../entity/SaleItem";
 import { VendorPoints } from "../entity/VendorPoint";
 import { Product } from "../entity/Product";
+import { ProductSalesSummary } from "../entity/views/ProductSale.view";
+import { VendorPointSalesSummaryView } from "../entity/views/VendorPointSales.view";
 
 const saleRepository = DataSource.getRepository(Sale);
+const productSalesSummaryRepository = DataSource.getRepository(ProductSalesSummary);
+const vendorPointSalesSummaryRepository = DataSource.getRepository(VendorPointSalesSummaryView);
 
 export const createSale = async (req: Request, res: Response) => {
   console.log(req.body);
@@ -106,6 +110,29 @@ export const deleteSale = async (req: Request, res: Response) => {
     res.status(204).send();
   } catch (error) {
     console.error(error);
+    res.status(500).json({ message: (error as Error).message });
+  }
+};
+
+
+// Views
+
+export const getProductSalesSummary = async (req: Request, res: Response) => {
+  try {
+    const productSalesSummary = await productSalesSummaryRepository.find();
+    res.json(productSalesSummary);
+  } catch (error) {
+    console.error("Failed to fetch product sales summary:", error);
+    res.status(500).json({ message: (error as Error).message });
+  }
+};
+
+export const getVendorPointSalesSummary = async (req: Request, res: Response) => {
+  try {
+    const vendorPointSalesSummary = await vendorPointSalesSummaryRepository.find();
+    res.json(vendorPointSalesSummary);
+  } catch (error) {
+    console.error("Failed to fetch vendor point sales summary:", error);
     res.status(500).json({ message: (error as Error).message });
   }
 };

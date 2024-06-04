@@ -25,6 +25,7 @@ import {
   getFestivals,
   updateFestival,
 } from "../controllers/festival.controller";
+import { getProductSalesSummary, getVendorPointSalesSummary } from "../controllers/sale.controller";
 
 const router = express.Router();
 
@@ -66,5 +67,8 @@ router.get("/product/:id", authentification, getProductById);
 router.post("/product", authentification, createProduct);
 router.put("/product/:id", authentification, updateProduct);
 router.delete("/product/:id", authentification, deleteProduct);
+
+router.get("/sales/views/product-sales-summary", authentification, getProductSalesSummary);
+router.get("/sales/views/vendor-point-sales-summary", authentification, getVendorPointSalesSummary)
 
 export { router as apiRouter };

@@ -17,15 +17,15 @@ import { ViewEntity, ViewColumn, DataSource } from "typeorm";
       .addGroupBy("vp.name"),
 })
 export class ProductSalesSummary {
-  @ViewColumn()
-  product_name: string;
+  @ViewColumn({name: "product_name"})
+  productName: string;
 
-  @ViewColumn()
-  vendor_point_name: string;
+  @ViewColumn({name: "vendor_point_name"})
+  vendorPointName: string;
 
-  @ViewColumn()
-  total_quantity: number;
+  @ViewColumn({name: "total_quantity"})
+  totalQuantity: number;
 
-  @ViewColumn()
-  total_revenue: number;
+  @ViewColumn({name: "total_revenue"})
+  totalRevenue: number;
 }

@@ -1,7 +1,7 @@
 import { ViewEntity, ViewColumn, DataSource } from "typeorm";
 
 @ViewEntity({
-  name: "view_vender_point_sales_summary",
+  name: "view_vendor_point_sales_summary",
   expression: (dataSource: DataSource) =>
     dataSource
       .createQueryBuilder()
@@ -15,15 +15,15 @@ import { ViewEntity, ViewColumn, DataSource } from "typeorm";
       .groupBy("vp.name"),
 })
 export class VendorPointSalesSummaryView {
-  @ViewColumn()
+  @ViewColumn({ name: "vendor_point_name" })
   vendorPointName: string;
 
-  @ViewColumn()
+  @ViewColumn({ name: "total_sales_transactions" })
   totalSalesTransactions: number;
 
-  @ViewColumn()
+  @ViewColumn({ name: "total_quantity" })
   totalQuantity: number;
 
-  @ViewColumn()
+  @ViewColumn({ name: "total_revenue" })
   totalRevenue: number;
 }

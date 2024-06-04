@@ -1,5 +1,9 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { encrypt } from "../helpers/encypt.helper";
+import * as dotenv from "dotenv";
+
+dotenv.config()
+const { ADMIN_USER, ADMIN_PW } = process.env;
 
 export class CreateUsers1716645261733 implements MigrationInterface {
   name = "CreateUsers1716645261733";
@@ -10,9 +14,9 @@ export class CreateUsers1716645261733 implements MigrationInterface {
     );
 
     // Create an admin user
-    const hashedPassword = await encrypt.encryptpass("SetPassword");
+    const hashedPassword = await encrypt.encryptpass(ADMIN_PW as string);
     await queryRunner.query(
-      `INSERT INTO "users" ("name", "email", "password", "role") VALUES ('admin', 'youmail@example.com', $1, 'admin')`,
+      `INSERT INTO "users" ("name", "email", "password", "role") VALUES ('admin', '${ADMIN_USER as string}', $1, 'admin')`,
       [hashedPassword],
     );
   }
